@@ -1,0 +1,45 @@
+
+
+
+
+.admin_left {
+    width: 20%;
+    padding-right: 15px;
+    border-right: 1px solid #b8b8b8;
+}
+
+.admin_left ul {
+    list-style: none;
+    margin-left: -30px;
+}
+
+.admin_left ul li {
+    margin-bottom: 15px;
+}
+
+.admin_left ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.admin_right {
+    width: 80%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.customer_product {
+    margin-right: 30px;
+    display: block;
+    text-decoration: none;
+}
+
+.customer_product ul {
+    list-style: none;
+    margin-left: -30px;
+}
+
+.customer_product ul li {
+    margin-bottom: 15px;
+}
+
