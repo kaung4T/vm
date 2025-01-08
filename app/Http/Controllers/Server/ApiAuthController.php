@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Server;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Routing\Controller as BaseController;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class ApiAuthController extends BaseController
+class ApiAuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
@@ -26,8 +26,8 @@ class ApiAuthController extends BaseController
     public function login()
     {
         $credentials = request(['name', 'password']);
-
-        if (! $token = auth('api')->attempt($credentials)) {
+        
+        if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -51,7 +51,8 @@ class ApiAuthController extends BaseController
      */
     public function logout()
     {
-        auth('api')->logout();
+        $current_token = JWTAuth::getToken();
+        JWTAuth::invalidate($current_token);
 
         return response()->json(['message' => 'Successfully logged out']);
     }
@@ -63,7 +64,11 @@ class ApiAuthController extends BaseController
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth('api')->refresh());
+        
+        $current_token = JWTAuth::getToken();
+        $token = JWTAuth::refresh($current_token);
+        
+        return $this->respondWithToken($token);
     }
 
     /**
@@ -78,7 +83,7 @@ class ApiAuthController extends BaseController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
         ]);
     }
 }
