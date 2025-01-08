@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
+    protected $user;
+
+    public function __construct(User $user) {
+        $this->user = $user;
+    }
+    
     public function login (Request $request) {
         return view('auth.login');
     }

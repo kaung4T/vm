@@ -4,10 +4,17 @@ namespace App\Http\Controllers\Server;
 
 use App\Http\Controllers\Controller;
 use App\Models\Products;
+use App\Utils\Product;
 use Illuminate\Http\Request;
 
 class ApiProductsController extends Controller
 {
+    protected $products;
+
+    public function __construct(Product $products) {
+        $this->products = $products;
+    }
+    
     public function apiProductAll()
     {
         try {
